@@ -262,7 +262,7 @@ footer a{color:var(--gold-deep);text-decoration:none;text-transform:uppercase}
     </button>
   </div>
 
-  <footer>LSA Toolbox · v1.52 · built by <a href="https://eligrt.github.io">eligrt</a></footer>
+  <footer>LSA Toolbox · v1.54 · built by <a href="https://eligrt.github.io">eligrt</a></footer>
 </div>
 
 <script>
@@ -284,18 +284,18 @@ const OWN = [
     glyph:"📘", tag:"POH", fit:"contain", test:true
   },
   {
-    title:"METAR / TAF",
-    en:"Weather Brief · decoder",
-    desc:"דיווחי מזג אוויר (METAR) ותחזיות (TAF) לשדות בארץ ובחו\"ל (לפי קוד ICAO).",
-    url:"https://eligrt.github.io/AirCheck/AirCheck_METAR.html",
-    icon:"metar_icon.png", glyph:"🌦", tag:"WX", fit:"contain"
-  },
-  {
     title:"AirNotam-ISR",
     en:"Advanced Israeli NOTAM map",
     desc:"סינון מתקדם של נוטמים והצגתם כפוליגונים על מפה.",
     url:"https://eligrt.github.io/AirNotam-ISR/AirNotam-ISR.html",
     icon:"airnotam_icon.png", glyph:"⚠", tag:"NOTAM", fit:"contain", test:true
+  },
+  {
+    title:"METAR / TAF",
+    en:"Weather Brief · decoder",
+    desc:"דיווחי מזג אוויר (METAR) ותחזיות (TAF) לשדות בארץ ובחו\"ל (לפי קוד ICAO).",
+    url:"https://eligrt.github.io/AirCheck/AirCheck_METAR.html",
+    icon:"metar_icon.png", glyph:"🌦", tag:"WX", fit:"contain"
   },
   {
     title:"Weight & Balance",
@@ -312,12 +312,11 @@ const OWN = [
     icon:"briefing_icon.png", glyph:"📋", tag:"PAX", fit:"contain"
   },
   {
-    title:"AirLog",
-    en:"Where aviation meets Google Sheet",
-    desc:"הלוגבוק שלך מ-Google Sheet, בכף היד כאפליקציה (רישום טיסות, מעקב כשירות, סטטיסטיקות, יומן ועוד).",
-    url:"https://eligrt.github.io/AirLog/AirLog.html",
-    icon:"https://eligrt.github.io/AirLog/icon-512.png",
-    glyph:"📖", tag:"LOGBOOK"
+    title:"AirATIS",
+    en:"Tap-fast ATIS capture",
+    desc:"רישום בקליק של נתוני ATIS תוך כדי האזנה, כולל חישוב רוח צולבת למסלול.",
+    url:"https://eligrt.github.io/AirATIS/AirATIS.html",
+    icon:"atis_icon.png", glyph:"📻", tag:"ATIS", fit:"contain", test:true
   },
   {
     title:"Merhav FPL",
@@ -325,6 +324,14 @@ const OWN = [
     desc:"הגשת תוכנית ל\"טיסת מרחב\" בנתיבי אז\"ם דרומית לבאר שבע באמצ\"ש (\"נתיב סגול\").",
     url:"https://eligrt.github.io/MERHAV_fpl/PURPLE_Routes_AZAM.html",
     icon:"merhav_icon.png", glyph:"🟣", tag:"FPL", fit:"contain"
+  },
+  {
+    title:"AirLog",
+    en:"Where aviation meets Google Sheet",
+    desc:"הלוגבוק שלך מ-Google Sheet, בכף היד כאפליקציה (רישום טיסות, מעקב כשירות, סטטיסטיקות, יומן ועוד).",
+    url:"https://eligrt.github.io/AirLog/AirLog.html",
+    icon:"https://eligrt.github.io/AirLog/icon-512.png",
+    glyph:"📖", tag:"LOGBOOK"
   }
 ];
 
