@@ -203,6 +203,16 @@ h1{
 
 .grid.external .card{padding:11px 12px}
 
+/* featured hero card - spans both columns */
+.card.featured{grid-column:1/-1;padding:14px 16px;gap:10px;border-color:var(--gold)}
+.card.featured::before{transform:scaleY(1)}
+.card.featured .card-top{align-items:center;gap:14px}
+.card.featured .icon{width:58px;height:58px;border-radius:14px}
+.card.featured h2{font-size:1.2rem;font-weight:700}
+.card.featured .en{font-size:.7rem}
+.card.featured .card-desc{max-height:none}
+.card.featured p{font-size:.8rem}
+
 .ribbon{
   position:absolute;top:14px;left:-34px;z-index:3;
   transform:rotate(-45deg);
@@ -234,6 +244,9 @@ footer a{color:var(--gold-deep);text-decoration:none;text-transform:uppercase}
   .card h2{font-size:.9rem}
   .card .en{font-size:.58rem}
   .card p{font-size:.74rem}
+  .card.featured{padding:13px 14px}
+  .card.featured .icon{width:52px;height:52px}
+  .card.featured h2{font-size:1.1rem}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -262,7 +275,7 @@ footer a{color:var(--gold-deep);text-decoration:none;text-transform:uppercase}
     </button>
   </div>
 
-  <footer>LSA Toolbox · v1.58 · built by <a href="https://eligrt.github.io">eligrt</a></footer>
+  <footer>LSA Toolbox · v1.59 · built by <a href="https://eligrt.github.io">eligrt</a></footer>
 </div>
 
 <script>
@@ -273,7 +286,7 @@ const OWN = [
     desc:"כל מה שלא נכנס לבד\"ח הרשמי, אבל חייבים להשלים לפני שממריאים (ואחרי שנוחתים...).",
     url:"https://eligrt.github.io/AirCheck/AirCheck_RD.html",
     icon:"https://eligrt.github.io/AirCheck/AirCheck_logo_RD.png",
-    glyph:"✈", tag:"CHECKLIST"
+    glyph:"✈", tag:"CHECKLIST", featured:true
   },
   {
     title:"AirCheck POH",
@@ -365,7 +378,7 @@ const EXT = [
 function cardHTML(t){
   const hasImg = t.icon && t.icon.length;
   return `
-  <a class="card${t.test?' beta':''}" href="${t.url}" target="_blank" rel="noopener">
+  <a class="card${t.test?' beta':''}${t.featured?' featured':''}" href="${t.url}" target="_blank" rel="noopener">
     ${t.test?'<span class="ribbon">BETA</span>':''}
     <div class="card-top">
       <span class="icon">
@@ -377,7 +390,8 @@ function cardHTML(t){
         ${t.en?`<span class="en">${t.en}</span>`:''}
       </span>
     </div>
-    ${t.desc?`
+    ${t.desc&&t.featured?`<div class="card-desc"><p>${t.desc}</p></div>`:''}
+    ${t.desc&&!t.featured?`
     <button class="more-toggle" type="button" aria-expanded="false" aria-label="מידע נוסף" onclick="toggleDesc(event,this)">
       <span>מידע נוסף</span>
       <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
