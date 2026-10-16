@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- LSA Toolbox v1.86 -->
+<!-- LSA Toolbox v1.88 -->
 <html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -135,12 +135,12 @@ button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
 .stats-note{margin-top:16px;text-align:center;font-family:var(--font-mono);font-size:9px;letter-spacing:.08em;color:var(--ink-faint);text-transform:uppercase}
 .page-footer{
   flex-shrink:0;display:flex;align-items:center;justify-content:space-between;gap:8px;direction:rtl;
-  padding:8px 12px max(8px, calc(env(safe-area-inset-bottom) - 16px));
+  padding:7px 12px max(8px, calc(env(safe-area-inset-bottom) - 16px));
   font-family:var(--font-mono);font-size:9px;color:var(--ink-faint);letter-spacing:.06em;text-transform:uppercase;
   border-top:1px solid var(--gold-lite);background:var(--paper-hi);
 }
 .page-footer a{color:var(--gold-deep);text-decoration:none}
-.footer-refresh{flex:0 0 52px;text-align:right;background:none;border:0;padding:6px 0;font-family:var(--font-ui);font-size:11px;color:var(--ink-muted);text-decoration:underline;text-underline-offset:2px;opacity:.75;cursor:pointer;text-transform:none;letter-spacing:.02em}
+.footer-refresh{line-height:13px;flex:0 0 52px;text-align:right;background:none;border:0;padding:6px 0;font-family:var(--font-ui);font-size:11px;color:var(--ink-muted);text-decoration:underline;text-underline-offset:2px;opacity:.75;cursor:pointer;text-transform:none;letter-spacing:.02em}
 .footer-refresh:active{opacity:.4}
 .page-footer .ver{direction:ltr;flex:1;text-align:center}
 .page-footer .spacer{flex:0 0 52px}
@@ -179,7 +179,7 @@ button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
   <div class="sp-skip">tap to skip</div>
   <div class="page-footer sp-foot">
     <button type="button" class="footer-refresh">רענן</button>
-    <span class="ver">LSA Toolbox · v1.86 · built by <a href="https://eligrt.github.io">eligrt</a></span>
+    <span class="ver">LSA Toolbox · v1.88 · built by <a href="https://eligrt.github.io">eligrt</a></span>
     <span class="spacer" aria-hidden="true"></span>
   </div>
 </div>
@@ -212,7 +212,7 @@ button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
 
 <footer class="page-footer">
   <button type="button" class="footer-refresh">רענן</button>
-  <span class="ver">LSA Toolbox · v1.86 · built by <a href="https://eligrt.github.io">eligrt</a></span>
+  <span class="ver">LSA Toolbox · v1.88 · built by <a href="https://eligrt.github.io">eligrt</a></span>
   <span class="spacer" aria-hidden="true"></span>
 </footer>
 
@@ -234,8 +234,8 @@ const MAIN = [
   {id:"airtrack", name:"AirTrack", desc:"בקרוב", url:"", icon:IMG.track, soon:true},
   {id:"airnotam", name:"AirNotam-ISR", desc:"בקרוב", url:"", icon:IMG.notam, fit:"contain", soon:true},
   {id:"airatis", name:"AirATIS", desc:"רישום ATIS בקליק", more:"רישום בקליק של נתוני ATIS תוך כדי האזנה, כולל חישוב רוח צולבת למסלול.", url:"https://eligrt.github.io/AirATIS/AirATIS.html", icon:IMG.atis},
-  {id:"airlog", inapp:true, name:"AirLog", desc:"הלוגבוק שלך בכף היד", more:"הלוגבוק שלך מ-Google Sheet, בכף היד כאפליקציה (רישום טיסות, מעקב כשירות, סטטיסטיקות, יומן ועוד).", url:"https://eligrt.github.io/AirLog/AirLog.html", icon:IMG.log},
-  {id:"merhav", inapp:true, name:"Merhav FPL", desc:"תוכנית טיסת מרחב", more:"הגשת תוכנית ל\"טיסת מרחב\" בנתיבי אז\"ם דרומית לבאר שבע באמצ\"ש (\"נתיב סגול\").", url:"https://eligrt.github.io/MERHAV_fpl/MERHAV_fpl.html", icon:IMG.merhav}
+  {id:"airlog", track:true, name:"AirLog", desc:"הלוגבוק שלך בכף היד", more:"הלוגבוק שלך מ-Google Sheet, בכף היד כאפליקציה (רישום טיסות, מעקב כשירות, סטטיסטיקות, יומן ועוד).", url:"https://eligrt.github.io/AirLog/AirLog.html", icon:IMG.log},
+  {id:"merhav", track:true, name:"Merhav FPL", desc:"תוכנית טיסת מרחב", more:"הגשת תוכנית ל\"טיסת מרחב\" בנתיבי אז\"ם דרומית לבאר שבע באמצ\"ש (\"נתיב סגול\").", url:"https://eligrt.github.io/MERHAV_fpl/MERHAV_fpl.html", icon:IMG.merhav}
 ];
 
 const MORE = [
@@ -273,7 +273,7 @@ function toolHTML(t){
     <span class="name">${t.name}</span>
     <span class="desc">${t.desc}</span>${more}`;
   if(!t.url) return `<div class="card soon" aria-disabled="true">${inner}</div>`;
-  if(t.inapp) return `<a class="card" href="${t.url}?from=tb" onclick="tbTap('${t.id}')">${inner}</a>`;   // opens inside this app, tool shows a back button
+  if(t.track) return `<a class="card" href="${t.url}?from=tb" target="_blank" rel="noopener" onclick="tbTap('${t.id}')">${inner}</a>`;   // ?from=tb lets the tool count opens that came from the Toolbox
   return `<a class="card" href="${t.url}" target="_blank" rel="noopener" onclick="tbTap('${t.id}')">${inner}</a>`;
 }
 function toggleMore(e, btn, id){
