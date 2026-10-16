@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- LSA Toolbox v1.71 -->
+<!-- LSA Toolbox v1.72 -->
 <html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -33,14 +33,15 @@
   --font-mono:'JetBrains Mono',monospace;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html{height:100%;-webkit-text-size-adjust:100%;overflow:hidden;background:#1a1a1c}
+html{height:100%;height:var(--app-h,100%);-webkit-text-size-adjust:100%;overflow:hidden;background:var(--paper)}
 body{
-  height:100svh;overflow:hidden;display:flex;flex-direction:column;
+  height:100svh;height:var(--app-h,100svh);overflow:hidden;display:flex;flex-direction:column;
   background:var(--paper);color:var(--ink);font-family:var(--font-ui);line-height:1.4;
-  max-width:430px;margin:0 auto;
 }
+/* phone frame only on wide screens (desktop / tablet); phones use the full width, even 440pt ones */
 @media(min-width:600px){
-  body{border-left:2px solid var(--gold);border-right:2px solid var(--gold);box-shadow:0 0 60px rgba(0,0,0,.6)}
+  html{background:#1a1a1c}
+  body{max-width:430px;margin:0 auto;border-left:2px solid var(--gold);border-right:2px solid var(--gold);box-shadow:0 0 60px rgba(0,0,0,.6)}
 }
 button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
 
@@ -144,7 +145,7 @@ button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
 
 /* SPLASH */
 #splash{
-  position:fixed;top:0;left:0;right:0;margin:0 auto;width:100%;height:100svh;z-index:500;
+  position:fixed;top:0;left:0;right:0;margin:0 auto;width:100%;height:100svh;height:var(--app-h,100svh);z-index:500;
   background:var(--paper);
   display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;
   transition:opacity .32s ease-in-out;cursor:pointer;
@@ -176,7 +177,7 @@ button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
   <div class="sp-skip">tap to skip</div>
   <div class="page-footer sp-foot">
     <button type="button" class="footer-refresh">רענן</button>
-    <span class="ver">LSA Toolbox · v1.71 · built by <a href="https://eligrt.github.io">eligrt</a></span>
+    <span class="ver">LSA Toolbox · v1.72 · built by <a href="https://eligrt.github.io">eligrt</a></span>
     <span class="spacer" aria-hidden="true"></span>
   </div>
 </div>
@@ -209,7 +210,7 @@ button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
 
 <footer class="page-footer">
   <button type="button" class="footer-refresh">רענן</button>
-  <span class="ver">LSA Toolbox · v1.71 · built by <a href="https://eligrt.github.io">eligrt</a></span>
+  <span class="ver">LSA Toolbox · v1.72 · built by <a href="https://eligrt.github.io">eligrt</a></span>
   <span class="spacer" aria-hidden="true"></span>
 </footer>
 
@@ -361,6 +362,21 @@ function tbOpen(){
 function tbTap(id){ if(!id) return; const f={lastSeen:TB_SV}; f['taps/'+id+'/n']=TB_INC; f['taps/'+id+'/last']=TB_SV; tbSend(f); }
 function tbMore(id){ if(!id) return; const f={lastSeen:TB_SV}; f['more/'+id]=TB_INC; tbSend(f); }
 tbOpen();
+
+/* Full-height fix (same as AirATIS): on an iPhone home-screen app, 100vh/svh and innerHeight come out shorter
+   than the real screen and leave an empty strip under the footer. Use the screen height there (portrait only). */
+function setAppHeight(){
+  const iosApp = window.navigator.standalone === true;
+  const h = iosApp ? Math.max(window.innerHeight, screen.height) : window.innerHeight;
+  document.documentElement.style.setProperty('--app-h', h+'px');
+}
+setAppHeight();
+window.addEventListener('resize', () => { setAppHeight(); });
+window.addEventListener('orientationchange', () => setTimeout(setAppHeight, 300));
+function refitAppHeight(){ setAppHeight(); setTimeout(setAppHeight, 250); setTimeout(setAppHeight, 800); }
+window.addEventListener('pageshow', refitAppHeight);
+window.addEventListener('focus', refitAppHeight);
+document.addEventListener('visibilitychange', () => { if(!document.hidden) refitAppHeight(); });
 
 /* UTC clock */
 function tickClock(){
