@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- LSA Toolbox v1.69 -->
+<!-- LSA Toolbox v1.70 -->
 <html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -176,7 +176,7 @@ button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
   <div class="sp-skip">tap to skip</div>
   <div class="page-footer sp-foot">
     <button type="button" class="footer-refresh">רענן</button>
-    <span class="ver">LSA Toolbox · v1.69 · built by <a href="https://eligrt.github.io">eligrt</a></span>
+    <span class="ver">LSA Toolbox · v1.70 · built by <a href="https://eligrt.github.io">eligrt</a></span>
     <span class="spacer" aria-hidden="true"></span>
   </div>
 </div>
@@ -209,7 +209,7 @@ button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
 
 <footer class="page-footer">
   <button type="button" class="footer-refresh">רענן</button>
-  <span class="ver">LSA Toolbox · v1.69 · built by <a href="https://eligrt.github.io">eligrt</a></span>
+  <span class="ver">LSA Toolbox · v1.70 · built by <a href="https://eligrt.github.io">eligrt</a></span>
   <span class="spacer" aria-hidden="true"></span>
 </footer>
 
@@ -322,10 +322,35 @@ function tbOS(){
   return 'other';
 }
 function tbDay(){ const d=new Date(),p=v=>String(v).padStart(2,'0'); return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate()); }
-function tbSend(fields){
+const TB_QK = 'lsatb_q';
+function tbQ(){ try{ return JSON.parse(localStorage.getItem(TB_QK)||'[]'); }catch(e){ return []; } }
+function tbQSave(q){ try{ localStorage.setItem(TB_QK, JSON.stringify(q.slice(-50))); return true; }catch(e){ return false; } }
+// 'ok' = stored, 'drop' = rejected as invalid (never retry), 'retry' = offline or not allowed yet
+async function tbPost(fields){
   try{
-    fetch(TB_DB+'/toolbox/devices/'+tbId()+'.json',{method:'PATCH',body:JSON.stringify(fields),keepalive:true}).catch(()=>{});
+    const r = await fetch(TB_DB+'/toolbox/devices/'+tbId()+'.json',{method:'PATCH',body:JSON.stringify(fields),keepalive:true});
+    if(r.ok) return 'ok';
+    console.warn('toolbox stats: HTTP '+r.status);
+    return r.status===400 ? 'drop' : 'retry';
+  }catch(e){ return 'retry'; }
+}
+let tbBusy = false;
+async function tbFlush(){
+  if(tbBusy) return; tbBusy = true;
+  try{
+    while(true){
+      const q = tbQ(); if(!q.length) break;
+      const res = await tbPost(q[0]);
+      if(res==='retry') break;
+      const r = tbQ(); r.shift(); tbQSave(r);
+    }
   }catch(e){}
+  tbBusy = false;
+}
+// unsent events stay on the phone and are retried on the next open or tap
+function tbSend(fields){
+  const q = tbQ(); q.push(fields);
+  if(tbQSave(q)) tbFlush(); else tbPost(fields);
 }
 function tbOpen(){
   try{ if(sessionStorage.getItem('lsatb_s')) return; sessionStorage.setItem('lsatb_s','1'); }catch(e){}
