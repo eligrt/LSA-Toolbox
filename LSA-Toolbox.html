@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- LSA Toolbox v1.70 -->
+<!-- LSA Toolbox v1.71 -->
 <html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -176,7 +176,7 @@ button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
   <div class="sp-skip">tap to skip</div>
   <div class="page-footer sp-foot">
     <button type="button" class="footer-refresh">רענן</button>
-    <span class="ver">LSA Toolbox · v1.70 · built by <a href="https://eligrt.github.io">eligrt</a></span>
+    <span class="ver">LSA Toolbox · v1.71 · built by <a href="https://eligrt.github.io">eligrt</a></span>
     <span class="spacer" aria-hidden="true"></span>
   </div>
 </div>
@@ -209,7 +209,7 @@ button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
 
 <footer class="page-footer">
   <button type="button" class="footer-refresh">רענן</button>
-  <span class="ver">LSA Toolbox · v1.70 · built by <a href="https://eligrt.github.io">eligrt</a></span>
+  <span class="ver">LSA Toolbox · v1.71 · built by <a href="https://eligrt.github.io">eligrt</a></span>
   <span class="spacer" aria-hidden="true"></span>
 </footer>
 
@@ -353,7 +353,6 @@ function tbSend(fields){
   if(tbQSave(q)) tbFlush(); else tbPost(fields);
 }
 function tbOpen(){
-  try{ if(sessionStorage.getItem('lsatb_s')) return; sessionStorage.setItem('lsatb_s','1'); }catch(e){}
   const f={os:tbOS(), pwaInstalled:(window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone===true,
     appVersion:tbVer(), lastSeen:TB_SV, lastOpenedAt:TB_SV, opens:TB_INC};
   f['daily/'+tbDay()+'/o']=TB_INC;
