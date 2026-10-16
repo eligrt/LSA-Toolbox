@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- LSA Toolbox v1.83 -->
+<!-- LSA Toolbox v1.85 -->
 <html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -135,7 +135,7 @@ button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
 .stats-note{margin-top:16px;text-align:center;font-family:var(--font-mono);font-size:9px;letter-spacing:.08em;color:var(--ink-faint);text-transform:uppercase}
 .page-footer{
   flex-shrink:0;display:flex;align-items:center;justify-content:space-between;gap:8px;direction:rtl;
-  padding:8px 12px calc(8px + env(safe-area-inset-bottom));
+  padding:8px 12px max(8px, calc(env(safe-area-inset-bottom) - 16px));
   font-family:var(--font-mono);font-size:9px;color:var(--ink-faint);letter-spacing:.06em;text-transform:uppercase;
   border-top:1px solid var(--gold-lite);background:var(--paper-hi);
 }
@@ -162,7 +162,7 @@ button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
 .sp-line2{font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--ink-muted);margin-top:8px;min-height:20px;opacity:0;transition:opacity .4s ease;direction:ltr}
 .sp-line2.show{opacity:1}
 .sp-foot{position:absolute;left:0;right:0;bottom:0}
-.sp-skip{position:absolute;bottom:calc(56px + env(safe-area-inset-bottom));font-family:var(--font-mono);font-size:9px;letter-spacing:.18em;color:var(--ink-faint);text-transform:uppercase}
+.sp-skip{position:absolute;bottom:calc(52px + max(0px, calc(env(safe-area-inset-bottom) - 16px)));font-family:var(--font-mono);font-size:9px;letter-spacing:.18em;color:var(--ink-faint);text-transform:uppercase}
 
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 @media(max-width:360px){.name{font-size:10.5px}.desc{font-size:10px}.icon{width:50px;height:50px}}
@@ -179,7 +179,7 @@ button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
   <div class="sp-skip">tap to skip</div>
   <div class="page-footer sp-foot">
     <button type="button" class="footer-refresh">רענן</button>
-    <span class="ver">LSA Toolbox · v1.83 · built by <a href="https://eligrt.github.io">eligrt</a></span>
+    <span class="ver">LSA Toolbox · v1.85 · built by <a href="https://eligrt.github.io">eligrt</a></span>
     <span class="spacer" aria-hidden="true"></span>
   </div>
 </div>
@@ -212,7 +212,7 @@ button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
 
 <footer class="page-footer">
   <button type="button" class="footer-refresh">רענן</button>
-  <span class="ver">LSA Toolbox · v1.83 · built by <a href="https://eligrt.github.io">eligrt</a></span>
+  <span class="ver">LSA Toolbox · v1.85 · built by <a href="https://eligrt.github.io">eligrt</a></span>
   <span class="spacer" aria-hidden="true"></span>
 </footer>
 
@@ -232,7 +232,7 @@ const IMG = {
 const MAIN = [
   {id:"aircheck", name:"AirCheck", desc:"הצ'קליסט שמעל הצ'קליסט", more:"כל מה שלא נכנס לבד\"ח הרשמי, אבל חייבים להשלים לפני שממריאים (ואחרי שנוחתים...).", url:"https://eligrt.github.io/AirCheck/AirCheck_RD.html", icon:IMG.aircheck},
   {id:"airtrack", name:"AirTrack", desc:"בקרוב", url:"", icon:IMG.track, soon:true},
-  {id:"airnotam", name:"AirNotam-ISR", desc:"נוטמים על המפה", more:"סינון מתקדם של ה-NOTAMים הרלוונטיים לטיסה הקרובה שלך", url:"https://eligrt.github.io/AirNotam-ISR/AirNotam-ISR.html", icon:IMG.notam, fit:"contain", beta:true},
+  {id:"airnotam", name:"AirNotam-ISR", desc:"בקרוב", url:"", icon:IMG.notam, fit:"contain", soon:true},
   {id:"airatis", name:"AirATIS", desc:"רישום ATIS בקליק", more:"רישום בקליק של נתוני ATIS תוך כדי האזנה, כולל חישוב רוח צולבת למסלול.", url:"https://eligrt.github.io/AirATIS/AirATIS.html", icon:IMG.atis},
   {id:"airlog", name:"AirLog", desc:"הלוגבוק שלך בכף היד", more:"הלוגבוק שלך מ-Google Sheet, בכף היד כאפליקציה (רישום טיסות, מעקב כשירות, סטטיסטיקות, יומן ועוד).", url:"https://eligrt.github.io/AirLog/AirLog.html", icon:IMG.log},
   {id:"merhav", name:"Merhav FPL", desc:"תוכנית טיסת מרחב", more:"הגשת תוכנית ל\"טיסת מרחב\" בנתיבי אז\"ם דרומית לבאר שבע באמצ\"ש (\"נתיב סגול\").", url:"https://eligrt.github.io/MERHAV_fpl/MERHAV_fpl.html", icon:IMG.merhav}
