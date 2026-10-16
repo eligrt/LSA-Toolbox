@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- LSA Toolbox v1.67 -->
+<!-- LSA Toolbox v1.69 -->
 <html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -67,8 +67,6 @@ button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
   flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;
   padding:16px 14px 18px;
   background:var(--paper);
-  background-image:repeating-linear-gradient(0deg,transparent 0,transparent 27px,var(--paper-line) 27px,var(--paper-line) 28px);
-  background-attachment:local;
 }
 .content::-webkit-scrollbar{width:0}
 .sec-label{direction:ltr;
@@ -131,6 +129,7 @@ button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
 @keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(4px)}}
 
 /* FOOTER */
+.stats-note{margin-top:16px;text-align:center;font-family:var(--font-mono);font-size:9px;letter-spacing:.08em;color:var(--ink-faint);text-transform:uppercase}
 .page-footer{
   flex-shrink:0;display:flex;align-items:center;justify-content:space-between;gap:8px;direction:rtl;
   padding:8px 12px calc(8px + env(safe-area-inset-bottom));
@@ -146,7 +145,7 @@ button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
 /* SPLASH */
 #splash{
   position:fixed;top:0;left:0;right:0;margin:0 auto;width:100%;height:100svh;z-index:500;
-  background:var(--paper);background-image:repeating-linear-gradient(0deg,transparent 0,transparent 27px,var(--paper-line) 27px,var(--paper-line) 28px);
+  background:var(--paper);
   display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;
   transition:opacity .32s ease-in-out;cursor:pointer;
 }
@@ -159,7 +158,8 @@ button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
 .sp-line1{font-size:16px;white-space:nowrap;font-weight:600;color:var(--ink);min-height:26px;text-align:center;direction:ltr}
 .sp-line2{font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--ink-muted);margin-top:8px;min-height:20px;opacity:0;transition:opacity .4s ease;direction:ltr}
 .sp-line2.show{opacity:1}
-.sp-skip{position:absolute;bottom:calc(18px + env(safe-area-inset-bottom));font-family:var(--font-mono);font-size:9px;letter-spacing:.18em;color:var(--ink-faint);text-transform:uppercase}
+.sp-foot{position:absolute;left:0;right:0;bottom:0}
+.sp-skip{position:absolute;bottom:calc(56px + env(safe-area-inset-bottom));font-family:var(--font-mono);font-size:9px;letter-spacing:.18em;color:var(--ink-faint);text-transform:uppercase}
 
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 @media(max-width:360px){.name{font-size:10.5px}.desc{font-size:10px}.icon{width:50px;height:50px}}
@@ -174,6 +174,11 @@ button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
   <div class="sp-line1" id="spLine1"></div>
   <div class="sp-line2" id="spLine2">Made for Israeli LSA pilots</div>
   <div class="sp-skip">tap to skip</div>
+  <div class="page-footer sp-foot">
+    <button type="button" class="footer-refresh">רענן</button>
+    <span class="ver">LSA Toolbox · v1.69 · built by <a href="https://eligrt.github.io">eligrt</a></span>
+    <span class="spacer" aria-hidden="true"></span>
+  </div>
 </div>
 
 <header class="header">
@@ -194,6 +199,7 @@ button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
 
     <p class="sec-label next">EXTERNAL LINKS</p>
     <main class="grid ext" id="grid-ext"></main>
+    <p class="stats-note">Anonymous usage stats · no personal data</p>
   </div>
   <div class="scroll-fade" id="scrollFade" aria-hidden="true"></div>
   <button class="scroll-btn" id="scrollBtn" aria-label="Scroll down">
@@ -202,8 +208,8 @@ button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
 </div>
 
 <footer class="page-footer">
-  <button type="button" class="footer-refresh" id="refreshBtn">רענן</button>
-  <span class="ver">LSA Toolbox · v1.67 · built by <a href="https://eligrt.github.io">eligrt</a></span>
+  <button type="button" class="footer-refresh">רענן</button>
+  <span class="ver">LSA Toolbox · v1.69 · built by <a href="https://eligrt.github.io">eligrt</a></span>
   <span class="spacer" aria-hidden="true"></span>
 </footer>
 
@@ -221,18 +227,18 @@ const IMG = {
 };
 
 const MAIN = [
-  {name:"AirCheck", desc:"הצ'קליסט שמעל הצ'קליסט", more:"כל מה שלא נכנס לבד\"ח הרשמי, אבל חייבים להשלים לפני שממריאים (ואחרי שנוחתים...).", url:"https://eligrt.github.io/AirCheck/AirCheck_RD.html", icon:IMG.aircheck},
-  {name:"AirTrack", desc:"בקרוב", url:"", icon:IMG.track, soon:true},
-  {name:"AirNotam-ISR", desc:"נוטמים על המפה", more:"סינון מתקדם של ה-NOTAMים הרלוונטיים לטיסה הקרובה שלך", url:"https://eligrt.github.io/AirNotam-ISR/AirNotam-ISR.html", icon:IMG.notam, fit:"contain", beta:true},
-  {name:"AirATIS", desc:"רישום ATIS בקליק", more:"רישום בקליק של נתוני ATIS תוך כדי האזנה, כולל חישוב רוח צולבת למסלול.", url:"https://eligrt.github.io/AirATIS/AirATIS.html", icon:IMG.atis},
-  {name:"AirLog", desc:"הלוגבוק שלך בכף היד", more:"הלוגבוק שלך מ-Google Sheet, בכף היד כאפליקציה (רישום טיסות, מעקב כשירות, סטטיסטיקות, יומן ועוד).", url:"https://eligrt.github.io/AirLog/AirLog.html", icon:IMG.log},
-  {name:"Merhav FPL", desc:"תוכנית טיסת מרחב", more:"הגשת תוכנית ל\"טיסת מרחב\" בנתיבי אז\"ם דרומית לבאר שבע באמצ\"ש (\"נתיב סגול\").", url:"https://eligrt.github.io/MERHAV_fpl/PURPLE_Routes_AZAM.html", icon:IMG.merhav, fit:"contain"}
+  {id:"aircheck", name:"AirCheck", desc:"הצ'קליסט שמעל הצ'קליסט", more:"כל מה שלא נכנס לבד\"ח הרשמי, אבל חייבים להשלים לפני שממריאים (ואחרי שנוחתים...).", url:"https://eligrt.github.io/AirCheck/AirCheck_RD.html", icon:IMG.aircheck},
+  {id:"airtrack", name:"AirTrack", desc:"בקרוב", url:"", icon:IMG.track, soon:true},
+  {id:"airnotam", name:"AirNotam-ISR", desc:"נוטמים על המפה", more:"סינון מתקדם של ה-NOTAMים הרלוונטיים לטיסה הקרובה שלך", url:"https://eligrt.github.io/AirNotam-ISR/AirNotam-ISR.html", icon:IMG.notam, fit:"contain", beta:true},
+  {id:"airatis", name:"AirATIS", desc:"רישום ATIS בקליק", more:"רישום בקליק של נתוני ATIS תוך כדי האזנה, כולל חישוב רוח צולבת למסלול.", url:"https://eligrt.github.io/AirATIS/AirATIS.html", icon:IMG.atis},
+  {id:"airlog", name:"AirLog", desc:"הלוגבוק שלך בכף היד", more:"הלוגבוק שלך מ-Google Sheet, בכף היד כאפליקציה (רישום טיסות, מעקב כשירות, סטטיסטיקות, יומן ועוד).", url:"https://eligrt.github.io/AirLog/AirLog.html", icon:IMG.log},
+  {id:"merhav", name:"Merhav FPL", desc:"תוכנית טיסת מרחב", more:"הגשת תוכנית ל\"טיסת מרחב\" בנתיבי אז\"ם דרומית לבאר שבע באמצ\"ש (\"נתיב סגול\").", url:"https://eligrt.github.io/MERHAV_fpl/PURPLE_Routes_AZAM.html", icon:IMG.merhav, fit:"contain"}
 ];
 
 const MORE = [
-  {name:"Weight & Balance", desc:"משקל ואיזון", more:"מחשבון משקל ואיזון לאז\"מ.", url:"https://eligrt.github.io/AirBalance/AirBalance.html", icon:IMG.wnb},
-  {name:"METAR / TAF", desc:"מזג אוויר לשדות", more:"דיווחי מזג אוויר (METAR) ותחזיות (TAF) לשדות בארץ ובחו\"ל (לפי קוד ICAO).", url:"https://eligrt.github.io/AirCheck/AirCheck_METAR.html", icon:IMG.metar, fit:"contain"},
-  {name:"AirCheck POH", desc:"ספר הטיס בקליק", more:"גרסת אונליין של הבד\"ח - זמינה ונגישה ב\"קליק\".", url:"https://eligrt.github.io/AirCheck-POH/AirCheck_POH_TEST.html", icon:IMG.poh, beta:true}
+  {id:"wnb", name:"Weight & Balance", desc:"משקל ואיזון", more:"מחשבון משקל ואיזון לאז\"מ.", url:"https://eligrt.github.io/AirBalance/AirBalance.html", icon:IMG.wnb},
+  {id:"metar", name:"METAR / TAF", desc:"מזג אוויר לשדות", more:"דיווחי מזג אוויר (METAR) ותחזיות (TAF) לשדות בארץ ובחו\"ל (לפי קוד ICAO).", url:"https://eligrt.github.io/AirCheck/AirCheck_METAR.html", icon:IMG.metar, fit:"contain"},
+  {id:"poh", name:"AirCheck POH", desc:"ספר הטיס בקליק", more:"גרסת אונליין של הבד\"ח - זמינה ונגישה ב\"קליק\".", url:"https://eligrt.github.io/AirCheck-POH/AirCheck_POH_TEST.html", icon:IMG.poh, beta:true}
 ];
 
 const SVG = {
@@ -245,17 +251,17 @@ const SVG = {
 const GO = '<svg class="go" viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg>';
 
 const EXT = [
-  {name:"הגשת תוכנית טיסה", sub:"fpl.co.il", url:"https://fpl.co.il/", svg:SVG.fpl},
-  {name:"שירות מטאורולוגי", sub:"ims.gov.il", url:"https://ims.gov.il/he/aviation", svg:SVG.wx},
-  {name:"בדיקת נוטמים", sub:"Lior Ben-Horin", url:"https://notam.liorbenhorin.xyz/", svg:SVG.notam},
-  {name:"האזנה לפיקוח", sub:"atc-il.live", url:"https://www.atc-il.live/", svg:SVG.atc},
-  {name:"מחשבון CX-3", sub:"prepware.com", url:"https://prepware.com/cx3e/index.html", svg:SVG.calc}
+  {id:"ext-fpl", name:"הגשת תוכנית טיסה", sub:"fpl.co.il", url:"https://fpl.co.il/", svg:SVG.fpl},
+  {id:"ext-ims", name:"שירות מטאורולוגי", sub:"ims.gov.il", url:"https://ims.gov.il/he/aviation", svg:SVG.wx},
+  {id:"ext-notam", name:"בדיקת נוטמים", sub:"Lior Ben-Horin", url:"https://notam.liorbenhorin.xyz/", svg:SVG.notam},
+  {id:"ext-atc", name:"האזנה לפיקוח", sub:"atc-il.live", url:"https://www.atc-il.live/", svg:SVG.atc},
+  {id:"ext-cx3", name:"מחשבון CX-3", sub:"prepware.com", url:"https://prepware.com/cx3e/index.html", svg:SVG.calc}
 ];
 
 function toolHTML(t){
   const tag = t.beta ? '<span class="tag">BETA</span>' : (t.soon ? '<span class="tag soon">SOON</span>' : '');
   const more = t.more ? `
-    <button class="more-toggle" type="button" aria-expanded="false" aria-label="מידע נוסף" onclick="toggleMore(event,this)">
+    <button class="more-toggle" type="button" aria-expanded="false" aria-label="מידע נוסף" onclick="toggleMore(event,this,'${t.id}')">
       <span>מידע נוסף</span><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
     </button>
     <div class="card-more"><p>${t.more}</p></div>` : '';
@@ -264,18 +270,19 @@ function toolHTML(t){
     <span class="name">${t.name}</span>
     <span class="desc">${t.desc}</span>${more}`;
   if(!t.url) return `<div class="card soon" aria-disabled="true">${inner}</div>`;
-  return `<a class="card" href="${t.url}" target="_blank" rel="noopener">${inner}</a>`;
+  return `<a class="card" href="${t.url}" target="_blank" rel="noopener" onclick="tbTap('${t.id}')">${inner}</a>`;
 }
-function toggleMore(e, btn){
+function toggleMore(e, btn, id){
   e.preventDefault(); e.stopPropagation();
   const card = btn.closest('.card'), box = card.querySelector('.card-more');
   const open = card.classList.toggle('open');
   box.style.maxHeight = open ? box.scrollHeight + 'px' : '0px';
   btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  if(open) tbMore(id);
   setTimeout(updateCue, 280);
 }
 function linkHTML(t){
-  return `<a class="card link" href="${t.url}" target="_blank" rel="noopener">
+  return `<a class="card link" href="${t.url}" target="_blank" rel="noopener" onclick="tbTap('${t.id}')">
     <span class="icon">${t.svg}</span>
     <span class="txt"><span class="name">${t.name}</span><span class="sub">${t.sub}</span></span>
     ${GO}
@@ -284,6 +291,52 @@ function linkHTML(t){
 document.getElementById('grid-main').innerHTML = MAIN.map(toolHTML).join('');
 document.getElementById('grid-more').innerHTML = MORE.map(toolHTML).join('');
 document.getElementById('grid-ext').innerHTML = EXT.map(linkHTML).join('');
+
+/* ---- anonymous usage stats (Firebase REST, fire and forget) ---- */
+const TB_DB = 'https://aircheck-80530-default-rtdb.europe-west1.firebasedatabase.app';
+const TB_SV = {'.sv':'timestamp'}, TB_INC = {'.sv':{increment:1}};
+function tbRand(){
+  let s='';
+  try{ const a=new Uint8Array(12); crypto.getRandomValues(a); a.forEach(b=>s+=(b%36).toString(36)); }
+  catch(e){ while(s.length<12) s+=Math.floor(Math.random()*36).toString(36); }
+  return s;
+}
+function tbId(){
+  try{
+    let id=localStorage.getItem('lsatb_id');
+    if(!id||!/^[a-z0-9]{8,32}$/.test(id)){ id=tbRand(); localStorage.setItem('lsatb_id',id); }
+    return id;
+  }catch(e){ return window.__tbTmp||(window.__tbTmp=tbRand()); }
+}
+function tbVer(){
+  const m=(document.querySelector('.page-footer .ver')||{textContent:''}).textContent.match(/v[0-9][0-9.]*/);
+  return m?m[0]:'v0';
+}
+function tbOS(){
+  const u=navigator.userAgent||'';
+  if(/android/i.test(u)) return 'Android';
+  if(/iphone|ipad|ipod/i.test(u)) return 'iOS';
+  if(/windows/i.test(u)) return 'Windows';
+  if(/mac/i.test(u)) return 'Mac';
+  if(/linux/i.test(u)) return 'Linux';
+  return 'other';
+}
+function tbDay(){ const d=new Date(),p=v=>String(v).padStart(2,'0'); return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate()); }
+function tbSend(fields){
+  try{
+    fetch(TB_DB+'/toolbox/devices/'+tbId()+'.json',{method:'PATCH',body:JSON.stringify(fields),keepalive:true}).catch(()=>{});
+  }catch(e){}
+}
+function tbOpen(){
+  try{ if(sessionStorage.getItem('lsatb_s')) return; sessionStorage.setItem('lsatb_s','1'); }catch(e){}
+  const f={os:tbOS(), pwaInstalled:(window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone===true,
+    appVersion:tbVer(), lastSeen:TB_SV, lastOpenedAt:TB_SV, opens:TB_INC};
+  f['daily/'+tbDay()+'/o']=TB_INC;
+  tbSend(f);
+}
+function tbTap(id){ if(!id) return; const f={lastSeen:TB_SV}; f['taps/'+id+'/n']=TB_INC; f['taps/'+id+'/last']=TB_SV; tbSend(f); }
+function tbMore(id){ if(!id) return; const f={lastSeen:TB_SV}; f['more/'+id]=TB_INC; tbSend(f); }
+tbOpen();
 
 /* UTC clock */
 function tickClock(){
@@ -316,7 +369,7 @@ async function forceReload(){
   }catch(e){}
   const u=new URL(window.location.href); u.searchParams.set('r',Date.now()); window.location.replace(u.href);
 }
-document.getElementById('refreshBtn').addEventListener('click', forceReload);
+document.querySelectorAll('.footer-refresh').forEach(b => b.addEventListener('click', e => { e.stopPropagation(); forceReload(); }));
 
 /* splash: typed slogan, tap to skip */
 (function(){
