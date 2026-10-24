@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- LSA Toolbox v1.92 -->
+<!-- LSA Toolbox v1.93 -->
 <html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -48,9 +48,9 @@ button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
 /* HEADER */
 .header{
   flex-shrink:0;background:var(--ink);
-  padding:calc(10px + env(safe-area-inset-top)) 16px 10px;
+  padding:calc(10px + env(safe-area-inset-top) + var(--lsa-hdr-extra,0px)) 16px 10px;
   display:flex;align-items:center;justify-content:space-between;direction:ltr;
-  min-height:calc(58px + env(safe-area-inset-top));
+  min-height:calc(58px + env(safe-area-inset-top) + var(--lsa-hdr-extra,0px));
 }
 .hdr-clock{display:flex;align-items:baseline;gap:6px;color:var(--paper);font-family:var(--font-mono);direction:ltr}
 .hdr-clock-lbl{font-size:10px;opacity:.75;letter-spacing:.18em}
@@ -63,7 +63,7 @@ button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
 .hdr-title p{color:var(--gold-lite);font-weight:500;margin-top:1px;line-height:1.3;font-size:10.5px}
 
 /* CONTENT: ruled paper */
-.viewport{position:relative;flex:1;display:flex;min-height:0}
+.viewport{position:relative;flex:1;display:flex;min-height:0;background:var(--paper)}
 .content{
   flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;
   padding:16px 14px 18px;
@@ -170,10 +170,14 @@ button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
   --lsa-hdr-min:58px;                                   /* navy header content height */
   --lsa-foot-h:33px;                                    /* footer content height */
   --lsa-foot-pad:max(8px,calc(env(safe-area-inset-bottom,0px) - 16px)); /* sits low, clear of the home bar */
+  --lsa-navy:#1c3d6e;                                   /* body/html background: colours the iPhone status bar fade */
+  --lsa-hdr-extra:min(12px,env(safe-area-inset-top,0px)); /* 12px on iPhone only, 0 on desktop and browser tabs */
 }
 *{overscroll-behavior:none;}                            /* no rubber-band, no scroll chaining */
 html,body{overscroll-behavior:none;}
-.lsa-hdr{box-sizing:border-box;min-height:calc(var(--lsa-hdr-min) + env(safe-area-inset-top,0px));padding-top:calc(10px + env(safe-area-inset-top,0px));padding-bottom:10px;}
+body{background:var(--lsa-navy);}                       /* app containers must carry their own paper background */
+@media (max-width:599px){html{background:var(--lsa-navy);}}
+.lsa-hdr{box-sizing:border-box;min-height:calc(var(--lsa-hdr-min) + env(safe-area-inset-top,0px) + var(--lsa-hdr-extra));padding-top:calc(10px + env(safe-area-inset-top,0px) + var(--lsa-hdr-extra));padding-bottom:10px;}
 .lsa-foot{box-sizing:border-box;flex:0 0 auto;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;direction:ltr;
   height:calc(var(--lsa-foot-h) + var(--lsa-foot-pad));padding:0 12px var(--lsa-foot-pad);margin:0;
   background:var(--paper-hi,#fbf6e8);border-top:1px solid var(--gold-lite,#d4b878);
@@ -195,6 +199,22 @@ button.lsa-foot-slot{cursor:pointer;padding:8px 0;}
 .hdr-clock>.hdr-clock-lbl,.strip-clock>.strip-clock-lbl{order:2;font-size:9px!important;line-height:1;letter-spacing:.22em;margin:0!important;}
 .hdr-clock>:not(.hdr-clock-lbl),.strip-clock>:not(.strip-clock-lbl){order:1;}
 .hdr-clock-row{display:flex;flex-direction:column-reverse!important;align-items:center!important;gap:3px!important;}
+/* header family v2: icon+name LEFT, optional middle, UTC RIGHT (add class hdr-fam next to lsa-hdr) */
+.hdr-fam{direction:ltr!important;display:flex;justify-content:space-between;align-items:center;background:var(--ink);padding-left:16px;padding-right:16px;gap:6px}
+.hdr-fam .hdr-rail{display:flex;align-items:center;gap:10px;min-width:0}
+.hdr-fam .hdr-glyph{display:block;width:38px;height:38px;flex:0 0 38px;border-radius:9px;overflow:hidden;border:1px solid var(--gold);background:var(--paper)}
+.hdr-fam .hdr-glyph img{width:100%;height:100%;display:block;object-fit:cover}
+.hdr-fam .hdr-title{direction:ltr;text-align:left}
+.hdr-fam .hdr-title h1{font-size:16.5px;line-height:1.25;font-weight:700;letter-spacing:-.1px;color:var(--paper);margin:0;white-space:nowrap}
+.hdr-fam .hdr-title p{color:var(--gold-lite);font-weight:500;margin:1px 0 0;line-height:1.3;font-size:10.5px}
+.hdr-fam .hdr-clock{color:var(--paper);font-family:var(--font-mono,monospace);direction:ltr;flex:0 0 auto}
+.hdr-fam .hdr-utc{font-size:21px;font-weight:700;line-height:1}
+/* fonts pinned in every app: header text IBM Plex Sans Hebrew, clock and footer JetBrains Mono */
+.hdr-fam .hdr-title h1,.hdr-fam .hdr-title p{font-family:'IBM Plex Sans Hebrew',sans-serif}
+.hdr-fam .hdr-clock,.hdr-fam .hdr-utc,.hdr-fam .hdr-clock-lbl{font-family:'JetBrains Mono',monospace}
+.lsa-foot,.lsa-foot-ver,.lsa-foot-slot{font-family:'JetBrains Mono',monospace}
+.lsa-foot-reload{font-family:'IBM Plex Sans Hebrew',sans-serif}
+.lsa-hdr.hdr-fam .hdr-clock-lbl{font-size:9px;letter-spacing:.22em;opacity:.75}
 /* LSA-ALIGN v1 END */
 </style>
 </head>
@@ -207,7 +227,7 @@ button.lsa-foot-slot{cursor:pointer;padding:8px 0;}
   <div class="sp-line1" id="spLine1"></div>
   <div class="sp-line2" id="spLine2">Made for Israeli LSA pilots</div>
   <div class="sp-skip lsa-skip">tap to skip</div>
-  <div class="lsa-foot sp" dir="ltr"><span class="lsa-foot-slot"></span><span class="lsa-foot-ver">LSA Toolbox · v1.92 · built by <a href="https://eligrt.github.io">eligrt</a></span><button type="button" class="lsa-foot-reload" onclick="event.stopPropagation();forceReload()">טען מחדש</button></div>
+  <div class="lsa-foot sp" dir="ltr"><span class="lsa-foot-slot"></span><span class="lsa-foot-ver">LSA Toolbox · v1.93 · built by <a href="https://eligrt.github.io">eligrt</a></span><button type="button" class="lsa-foot-reload" onclick="event.stopPropagation();forceReload()">טען מחדש</button></div>
 </div>
 
 <header class="header lsa-hdr">
@@ -235,7 +255,7 @@ button.lsa-foot-slot{cursor:pointer;padding:8px 0;}
   </button>
 </div>
 
-<div class="lsa-foot" dir="ltr"><span class="lsa-foot-slot"></span><span class="lsa-foot-ver">LSA Toolbox · v1.92 · built by <a href="https://eligrt.github.io">eligrt</a></span><button type="button" class="lsa-foot-reload" onclick="forceReload()">טען מחדש</button></div>
+<div class="lsa-foot" dir="ltr"><span class="lsa-foot-slot"></span><span class="lsa-foot-ver">LSA Toolbox · v1.93 · built by <a href="https://eligrt.github.io">eligrt</a></span><button type="button" class="lsa-foot-reload" onclick="forceReload()">טען מחדש</button></div>
 
 <script>
 const IMG = {
