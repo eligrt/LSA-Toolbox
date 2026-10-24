@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- LSA Toolbox v1.93 -->
+<!-- LSA Toolbox v1.94 -->
 <html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -216,6 +216,8 @@ button.lsa-foot-slot{cursor:pointer;padding:8px 0;}
 .lsa-foot-reload{font-family:'IBM Plex Sans Hebrew',sans-serif}
 .lsa-hdr.hdr-fam .hdr-clock-lbl{font-size:9px;letter-spacing:.22em;opacity:.75}
 /* LSA-ALIGN v1 END */
+/* v1.94: while the cream splash is up, html/body are cream so the iPhone status bar fade is cream, not navy */
+html:has(#splash:not(.gone)),body:has(#splash:not(.gone)){background:var(--paper);}
 </style>
 </head>
 <body>
@@ -227,7 +229,7 @@ button.lsa-foot-slot{cursor:pointer;padding:8px 0;}
   <div class="sp-line1" id="spLine1"></div>
   <div class="sp-line2" id="spLine2">Made for Israeli LSA pilots</div>
   <div class="sp-skip lsa-skip">tap to skip</div>
-  <div class="lsa-foot sp" dir="ltr"><span class="lsa-foot-slot"></span><span class="lsa-foot-ver">LSA Toolbox · v1.93 · built by <a href="https://eligrt.github.io">eligrt</a></span><button type="button" class="lsa-foot-reload" onclick="event.stopPropagation();forceReload()">טען מחדש</button></div>
+  <div class="lsa-foot sp" dir="ltr"><span class="lsa-foot-slot"></span><span class="lsa-foot-ver">LSA Toolbox · v1.94 · built by <a href="https://eligrt.github.io">eligrt</a></span><button type="button" class="lsa-foot-reload" onclick="event.stopPropagation();forceReload()">טען מחדש</button></div>
 </div>
 
 <header class="header lsa-hdr">
@@ -255,7 +257,7 @@ button.lsa-foot-slot{cursor:pointer;padding:8px 0;}
   </button>
 </div>
 
-<div class="lsa-foot" dir="ltr"><span class="lsa-foot-slot"></span><span class="lsa-foot-ver">LSA Toolbox · v1.93 · built by <a href="https://eligrt.github.io">eligrt</a></span><button type="button" class="lsa-foot-reload" onclick="forceReload()">טען מחדש</button></div>
+<div class="lsa-foot" dir="ltr"><span class="lsa-foot-slot"></span><span class="lsa-foot-ver">LSA Toolbox · v1.94 · built by <a href="https://eligrt.github.io">eligrt</a></span><button type="button" class="lsa-foot-reload" onclick="forceReload()">טען מחדש</button></div>
 
 <script>
 const IMG = {
